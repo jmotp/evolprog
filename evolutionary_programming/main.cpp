@@ -3,14 +3,30 @@
 #include "Individuo.h"
 #include <chrono>
 #include <random>
+#include <algorithm>
 using namespace std;
 
+
+void avaliar(vector<Individuo> & individuos){
+    for(auto & i : individuos){
+
+        i.avaliar();
+    }
+}
 
 void print(vector<Individuo> individuos){
     cout << "  G1 G2 G3 G4"<<endl;
     for(auto & i : individuos){
 
         i.print();
+    }
+}
+
+void printCusto(vector<Individuo> individuos){
+    cout << "  G1 G2 G3 G4"<<endl;
+    for(auto & i : individuos){
+
+        i.printCusto();
     }
 }
 
@@ -21,12 +37,42 @@ void mutar(vector<Individuo> & individuos,float sigma,default_random_engine gene
     }
 }
 
+vector<Individuo> m_elitista(int Pop,vector<Individuo> & pais){
+    vector<Individuo> final;
+    for( int i = 0 ; i < Pop; i++){
+        float min = 1e16;
+        min_element(pais.begin(),pais.end());
+
+    }
+}
+
+void corrigir(vector<Individuo> & individuos, vector<Individuo> & clone){
+    for( int i = 0 ; i < individuos.size();i++){
+        clone.at(i).corrigir(clone.at(i).sumPcons(),individuos.at(i).sumPcons());
+    }
+
+}
+
+vector<Individuo> geracao(int Pop,float sigma ,default_random_engine generator, normal_distribution<double> distribution, vector <Individuo> & pais, vector <Individuo> & filhos){
+    filhos = pais;
+    mutar(filhos,sigma,generator,distribution);
+    corrigir(pais,filhos);
+    avaliar(filhos);
+    print(filhos);
+    for (auto & i: filhos){
+        pais.push_back(i);
+    }
+    return pais;
+}
+
+
 int main()
 {
     unsigned seed = chrono::system_clock::now().time_since_epoch().count();
     default_random_engine generator (seed);
     normal_distribution<double> distribution(0,1);
-    float sigma =5;
+    float sigma =1;
+
     int Pop;
     do{
         cout << "Insira o numero de Individuos da Populacao"<< endl;
@@ -44,21 +90,13 @@ int main()
     vector <Individuo> individuos;
     for( int i = 0; i < Pop;i++){
         Individuo ind = Individuo(geradores_ini);
+        cout << "Insira as potencias de carga do " << i+1 << "º Individuo"<<endl;
         ind.fill();
         individuos.push_back(ind);
     }
+    avaliar(individuos);
     print(individuos);
     vector <Individuo> clone;
-    clone = individuos;
-    cout << "Matriz pais"<< endl;
-    print(individuos);
-    cout << "Matriz filhos" << endl;
-    print (clone);
-    mutar(clone,sigma,generator,distribution);
-    cout << "Matriz pais"<< endl;
-    print(individuos);
-    cout << "Matriz filhos" << endl;
-    print (clone);
-
+    print(geracao(Pop,sigma,generator,distribution,individuos,clone));
     return 0;
 }

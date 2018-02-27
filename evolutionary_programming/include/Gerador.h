@@ -30,12 +30,31 @@ class Gerador
             Setcostc(costc);
 
         };
-        void mutarPpro(float sigma,default_random_engine generator, normal_distribution<double> distribution){
+        void mutarPpro(float sigma,default_random_engine & generator, normal_distribution<double> distribution){
             Ppro = Ppro * sigma * distribution(generator);
         }
-        void printPpro(){
-            cout << setw(4) <<  setprecision(2)<< Ppro ;
+        void corrigir(float pcons, float l){
+            Ppro = Ppro * l / pcons;
         }
+        void printPpro(){
+            cout << setw(4) <<  setprecision(4)<< Ppro <<" " ;
+        }
+        void calcCusto(){
+            custo = costa + Ppro* costb + Ppro * Ppro * costc;
+        }
+        void printCusto(){
+            cout << custo <<" " ;
+        };
+        void avaliar(){
+            if(Ppro> Pmax){
+                custo = custo + 100 * (Ppro-Pmax)*(Ppro-Pmax);
+            }
+            if(Ppro < Pmin){
+                custo = custo + 100 * (-Ppro+Pmin)*(-Ppro+Pmin);
+            }
+        }
+
+
         void print(){
             cout << "Pmax: " << GetPmax();
         };
@@ -51,6 +70,8 @@ class Gerador
         void Setcostb(float val) { costb = val; }
         float Getcostc() { return costc; }
         void Setcostc(float val) { costc = val; }
+        float Getcusto() { return custo; }
+        void Setcusto(float val) { custo = val; }
 
     protected:
 
@@ -61,6 +82,7 @@ class Gerador
         float costa;
         float costb;
         float costc;
+        float custo = 0;
 };
 
 #endif // GERADOR_H

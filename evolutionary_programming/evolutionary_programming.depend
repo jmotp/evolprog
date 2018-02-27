@@ -22,3 +22,26 @@
 	<vector>
 	"Gerador.h"
 
+1519686609 source:c:\users\jmotp\onedrive\documentos\github\evolprog\evolutionary_programming\src\gerador.cpp
+	"Gerador.h"
+
+1519687533 c:\users\jmotp\onedrive\documentos\github\evolprog\evolutionary_programming\include\gerador.h
+	<iostream>
+	<iomanip>
+	<chrono>
+	<random>
+
+1519690846 source:c:\users\jmotp\onedrive\documentos\github\evolprog\evolutionary_programming\src\individuo.cpp
+	"Individuo.h"
+
+1519690865 c:\users\jmotp\onedrive\documentos\github\evolprog\evolutionary_programming\include\individuo.h
+	<vector>
+	"Gerador.h"
+
+1519687648 source:c:\users\jmotp\onedrive\documentos\github\evolprog\evolutionary_programming\main.cpp
+	<iostream>
+	"Gerador.h"
+	"Individuo.h"
+	<chrono>
+	<random>
+

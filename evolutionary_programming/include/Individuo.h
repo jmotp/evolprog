@@ -6,6 +6,7 @@
 class Individuo
 {
     public:
+        Individuo();
         Individuo(vector<Gerador> geradores);
         virtual ~Individuo();
         void fill(){
@@ -13,21 +14,53 @@ class Individuo
                 int Ppro;
                 cin >> Ppro;
                 gerador.SetPpro(Ppro);
+                gerador.calcCusto();
             }
+            pcons = sumPcons();
 
         }
-        void mutar(float sigma,default_random_engine generator, normal_distribution<double> distribution){
+        //mutar matrizes filhos
+        void mutar(float sigma,default_random_engine & generator, normal_distribution<double> distribution){
             for(Gerador & g : geradores){
                 g.mutarPpro(sigma,generator,distribution);
+                g.calcCusto();
+            }
+        }
+        float getCustoTotal(){
+            float sum = 0;
+            for(Gerador & g : geradores){
+                sum += g.Getcusto();
+            }
+            return sum;
+
+        }
+
+        void corrigir(float pcons, float l ){
+            for(Gerador & g : geradores){
+                g.corrigir(pcons,l);
+                g.calcCusto();
             }
         }
 
-        float sumPmax(){
-            float sumPmax=0;
+        float sumPcons(){
+            float sumPpro=0;
             for(Gerador g : geradores){
-                sumPmax += g.GetPmax;
+                sumPpro = sumPpro  + g.GetPpro();
             }
-            return sumPmax;
+            return sumPpro;
+        }
+
+        void avaliar(){
+            for(Gerador & g : geradores){
+                g.avaliar();
+            }
+        }
+
+        void printCusto(){
+            for(Gerador g : geradores){
+                g.printCusto();
+            }
+            cout<<endl;
         }
         void print(){
 
@@ -43,6 +76,7 @@ class Individuo
 
     private:
         vector<Gerador> geradores;
+        float pcons;
 };
 
 #endif // INDIVIDUO_H
