@@ -2,6 +2,7 @@
 #define INDIVIDUO_H
 #include <vector>
 #include "Gerador.h"
+#include <typeinfo>
 
 class Individuo
 {
@@ -9,14 +10,20 @@ class Individuo
         Individuo();
         Individuo(vector<Gerador> geradores);
         virtual ~Individuo();
-        void fill(){
-            for(Gerador & gerador : geradores){
-                int Ppro;
-                cin >> Ppro;
-                gerador.SetPpro(Ppro);
-                gerador.calcCusto();
+        //gerar valores aleatorios iniciais para as potencias produzidas dos geradores
+        void fill(float P,default_random_engine & generator,uniform_real_distribution<float> distribution_){
+            float sum = 0;
+            int i;
+            do{
+                for( i = 0; i < geradores.size();i++){
+                    geradores[i].SetPpro(0);
+                }
+                for( i = 0 ; i < geradores.size()-1;i++){
+                    geradores[i].SetPpro(distribution_(generator)*(geradores[i].GetPmax()-geradores[i].GetPmin())+geradores[i].GetPmin());
             }
-            pcons = sumPcons();
+                geradores[i].SetPpro(P-sumPcons());
+                pcons = sumPcons();
+            }while(geradores[i].GetPpro()>geradores[i].GetPmax()||geradores[i].GetPpro()<geradores[i].GetPmin());
 
         }
         //mutar matrizes filhos
@@ -67,6 +74,7 @@ class Individuo
             for(Gerador g : geradores){
                 g.printPpro();
             }
+            cout<< getCustoTotal();
             cout<<endl;
         }
         vector<Gerador> Getgeradores() { return geradores; }

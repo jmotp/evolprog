@@ -31,7 +31,8 @@ class Gerador
 
         };
         void mutarPpro(float sigma,default_random_engine & generator, normal_distribution<double> distribution){
-            Ppro = Ppro * sigma * distribution(generator);
+
+            Ppro = (Ppro + sigma * distribution(generator));
         }
         void corrigir(float pcons, float l){
             Ppro = Ppro * l / pcons;
@@ -46,6 +47,7 @@ class Gerador
             cout << custo <<" " ;
         };
         void avaliar(){
+            calcCusto();
             if(Ppro> Pmax){
                 custo = custo + 100 * (Ppro-Pmax)*(Ppro-Pmax);
             }
@@ -78,7 +80,7 @@ class Gerador
     private:
         int Pmax;
         int Pmin;
-        float Ppro;
+        float Ppro=0;
         float costa;
         float costb;
         float costc;
