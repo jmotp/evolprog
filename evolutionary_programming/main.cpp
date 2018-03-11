@@ -88,6 +88,7 @@ vector<Individuo> geracao(int Pop,float sigma ,default_random_engine generator, 
 
 int main()
 {
+
     unsigned seed = chrono::system_clock::now().time_since_epoch().count();
     default_random_engine generator (seed);
     normal_distribution<double> distribution(0,1);
@@ -101,6 +102,7 @@ int main()
     }while(Pop<=0);
     float P;
 
+    //Inicializacao dos geradores
     vector < Gerador > geradores_ini;
     Gerador G1 = Gerador (80, 40, 1100 , 20 ,0.1);
     Gerador G2 = Gerador (60, 20 , 1200, 25, 0.07);
@@ -110,6 +112,7 @@ int main()
     geradores_ini.push_back(G2);
     geradores_ini.push_back(G3);
     geradores_ini.push_back(G4);
+    //Inicializacao dos individuos
     vector <Individuo> individuos;
     float sumPmax = 0;
     float sumPmin = 0;
@@ -130,10 +133,13 @@ int main()
 
     }
 
-
+    //Adicionar individuos
     for(int i = 0 ; i < Pop; i++){
+        //cria individuo com geradores
         Individuo ind = Individuo(geradores_ini);
+        //gera valores aleatorios para as cargas dos geradores
         ind.fill(P,generator,distribution_);
+        //mete individuo no vetor
         individuos.push_back(ind);
     }
     int Nger;
@@ -142,10 +148,13 @@ int main()
     cout << "Numero de Geracoes" <<endl;
     cin >> Nger;
     for(int i = 0 ; i < Nger;i++){
+
         avaliar(individuos);
         vector <Individuo> clone;
+        //vetor com geracao nova
         individuos = geracao(Pop,sigma,generator,distribution,individuos,clone);
         //print(individuos);
+        //filtra resultados com metodo elitista
         individuos = m_elitista(individuos,Pop);
     }
     print(individuos);

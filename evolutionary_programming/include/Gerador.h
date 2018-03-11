@@ -11,7 +11,8 @@ class Gerador
         Gerador(int Pmax,int Pmin,float costa,float costb,float costc );
         Gerador();
         virtual ~Gerador();
-        void fill(){
+
+        /*void fill(){
             int Pmax;
             int Pmin;
             float costa, costb, costc;
@@ -29,7 +30,7 @@ class Gerador
             Setcostb(costb);
             Setcostc(costc);
 
-        };
+        };*/
         void mutarPpro(float sigma,default_random_engine & generator, normal_distribution<double> distribution){
 
             Ppro = (Ppro + sigma * distribution(generator));
