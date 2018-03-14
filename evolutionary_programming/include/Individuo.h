@@ -74,7 +74,7 @@ class Individuo
             for(Gerador g : geradores){
                 g.printPpro();
             }
-            cout<< getCustoTotal();
+            cout<< getCustoTotal()<<'|';
             cout<<endl;
         }
         vector<Gerador> Getgeradores() { return geradores; }

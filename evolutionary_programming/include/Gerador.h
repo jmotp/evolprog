@@ -39,7 +39,7 @@ class Gerador
             Ppro = Ppro * l / pcons;
         }
         void printPpro(){
-            cout << setw(4) <<  setprecision(4)<< Ppro <<" " ;
+            cout <<  setw(4) << setprecision(2)<< fixed << Ppro <<" |" ;
         }
         void calcCusto(){
             custo = costa + Ppro* costb + Ppro * Ppro * costc;

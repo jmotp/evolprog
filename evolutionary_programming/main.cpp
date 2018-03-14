@@ -15,10 +15,12 @@ void avaliar(vector<Individuo> & individuos){
 }
 
 void print(vector<Individuo> individuos){
-    cout << "  G1 G2 G3 G4"<<endl;
+    cout << "G1     G2     G3     G4     Custo"<<endl;
+    cout<<   "-----------------------------------"<<endl;
     for(auto & i : individuos){
 
         i.print();
+    cout<<   "-----------------------------------"<<endl;
     }
     cout << endl;
 
@@ -73,6 +75,42 @@ vector<Individuo> m_elitista(vector<Individuo> & individuos,int Pop){
 }
 
 
+vector<Individuo> testocastico(vector<Individuo> & individuos ,int Pop,default_random_engine generator, uniform_real_distribution<float> distribution_){
+    vector <Individuo> aux;
+    int n1,n2;
+    for(int i = 0 ,newPop = Pop*2-1; i < Pop;i++,newPop--){
+        do{
+            n1 = (distribution_(generator)*newPop);
+            n2 = (distribution_(generator)*newPop);
+        }while(n1==n2);
+        float prob = distribution_(generator);
+        if(individuos.at(n1).getCustoTotal()<individuos.at(n2).getCustoTotal()){
+            if(prob<0.8){
+                aux.push_back(individuos.at(n1));
+                individuos.erase(individuos.begin()+n1);
+            }else{
+                aux.push_back(individuos.at(n2));
+                individuos.erase(individuos.begin()+n2);
+            }
+        }else{
+            if(prob<0.8){
+                aux.push_back(individuos.at(n2));
+                individuos.erase(individuos.begin()+n2);
+            }else{
+                aux.push_back(individuos.at(n1));
+                individuos.erase(individuos.begin()+n1);
+            }
+        }
+
+    }
+    return aux;
+
+}
+
+struct myclass {
+  bool operator() (Individuo i,Individuo j) { return (i.getCustoTotal()<j.getCustoTotal());}
+} compare;
+
 vector<Individuo> geracao(int Pop,float sigma ,default_random_engine generator, normal_distribution<double> distribution, vector <Individuo> & pais, vector <Individuo> & filhos){
     filhos = pais;
     mutar(filhos,sigma,generator,distribution);
@@ -88,6 +126,7 @@ vector<Individuo> geracao(int Pop,float sigma ,default_random_engine generator, 
 
 int main()
 {
+    Gnuplot gp;
 
     unsigned seed = chrono::system_clock::now().time_since_epoch().count();
     default_random_engine generator (seed);
@@ -127,8 +166,8 @@ int main()
             cout<<"Potencia nao pode ser negativa"<<endl;
         }
         else{
-            if(P>=sumPmax||P<=sumPmin)cout<<"Potencia entre: " << sumPmin << " e "<<sumPmax <<endl;
-            else{break;}
+            if(P>240||P<160)cout<<"Potencia entre: " << 160 << " e "<<240 <<endl;
+            else break;
         }
 
     }
@@ -147,6 +186,12 @@ int main()
     print(individuos);
     cout << "Numero de Geracoes" <<endl;
     cin >> Nger;
+    int method;
+    do{
+        cout << "Escolha criterio de selecao" << endl << "Metodo elistista(1)" << endl << "Torneio Estocastico(2)" << endl;
+        cin >> method;
+    }while(method!=1 && method != 2);
+
     for(int i = 0 ; i < Nger;i++){
 
         avaliar(individuos);
@@ -155,8 +200,16 @@ int main()
         individuos = geracao(Pop,sigma,generator,distribution,individuos,clone);
         //print(individuos);
         //filtra resultados com metodo elitista
-        individuos = m_elitista(individuos,Pop);
+        if(method == 2){
+                individuos = testocastico(individuos,Pop, generator, distribution_);
+        }else if ( method == 1 ){
+                individuos = m_elitista(individuos,Pop);
+        }
+
     }
+
+    sort(individuos.begin(),individuos.end(),compare);
+    cout << "Individuos ordenados por custo:" << endl;
     print(individuos);
     return 0;
 }
