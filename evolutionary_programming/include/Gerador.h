@@ -4,6 +4,8 @@
 #include <iomanip>
 #include <chrono>
 #include <random>
+#include "Linha.h"
+#include "Carga.h"
 using namespace std;
 class Gerador
 {
@@ -55,6 +57,7 @@ class Gerador
             if(Ppro < Pmin){
                 custo = custo + 100 * (-Ppro+Pmin)*(-Ppro+Pmin);
             }
+
         }
 
 
@@ -75,6 +78,8 @@ class Gerador
         void Setcostc(float val) { costc = val; }
         float Getcusto() { return custo; }
         void Setcusto(float val) { custo = val; }
+
+
 
     protected:
 

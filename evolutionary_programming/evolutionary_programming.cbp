@@ -34,11 +34,17 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="include/Barramento.h" />
+		<Unit filename="include/Carga.h" />
 		<Unit filename="include/Gerador.h" />
 		<Unit filename="include/Individuo.h" />
+		<Unit filename="include/Linha.h" />
 		<Unit filename="main.cpp" />
+		<Unit filename="src/Barramento.cpp" />
+		<Unit filename="src/Carga.cpp" />
 		<Unit filename="src/Gerador.cpp" />
 		<Unit filename="src/Individuo.cpp" />
+		<Unit filename="src/Linha.cpp" />
 		<Extensions>
 			<code_completion />
 			<envvars />

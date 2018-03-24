@@ -22,28 +22,58 @@
 	<vector>
 	"Gerador.h"
 
-1519686609 source:c:\users\jmotp\onedrive\documentos\github\evolprog\evolutionary_programming\src\gerador.cpp
+1521905601 source:c:\users\jmotp\onedrive\documentos\github\evolprog\evolutionary_programming\src\gerador.cpp
 	"Gerador.h"
 
-1520896761 c:\users\jmotp\onedrive\documentos\github\evolprog\evolutionary_programming\include\gerador.h
+1521905239 c:\users\jmotp\onedrive\documentos\github\evolprog\evolutionary_programming\include\gerador.h
 	<iostream>
 	<iomanip>
 	<chrono>
 	<random>
+	"Linha.h"
+	"Carga.h"
 
-1519690846 source:c:\users\jmotp\onedrive\documentos\github\evolprog\evolutionary_programming\src\individuo.cpp
+1521907235 source:c:\users\jmotp\onedrive\documentos\github\evolprog\evolutionary_programming\src\individuo.cpp
 	"Individuo.h"
 
-1520897117 c:\users\jmotp\onedrive\documentos\github\evolprog\evolutionary_programming\include\individuo.h
+1521914143 c:\users\jmotp\onedrive\documentos\github\evolprog\evolutionary_programming\include\individuo.h
 	<vector>
 	"Gerador.h"
-	<typeinfo>
+	"Linha.h"
+	"Carga.h"
+	"Barramento.h"
 
-1520897072 source:c:\users\jmotp\onedrive\documentos\github\evolprog\evolutionary_programming\main.cpp
+1521915059 source:c:\users\jmotp\onedrive\documentos\github\evolprog\evolutionary_programming\main.cpp
 	<iostream>
 	"Gerador.h"
 	"Individuo.h"
 	<chrono>
 	<random>
 	<algorithm>
+	"Linha.h"
+	"Carga.h"
+	"Barramento.h"
+	<fstream>
+
+1521905173 source:c:\users\jmotp\onedrive\documentos\github\evolprog\evolutionary_programming\src\carga.cpp
+	"Carga.h"
+
+1521905207 c:\users\jmotp\onedrive\documentos\github\evolprog\evolutionary_programming\include\carga.h
+
+1521913288 source:c:\users\jmotp\onedrive\documentos\github\evolprog\evolutionary_programming\src\linha.cpp
+	"Linha.h"
+
+1521913291 c:\users\jmotp\onedrive\documentos\github\evolprog\evolutionary_programming\include\linha.h
+	<vector>
+
+1521904319 source:c:\users\jmotp\onedrive\documentos\github\evolprog\evolutionary_programming\src\barramento.cpp
+	"Barramento.h"
+	<vector>
+	"Gerador.h"
+	"Carga.h"
+
+1521904668 c:\users\jmotp\onedrive\documentos\github\evolprog\evolutionary_programming\include\barramento.h
+	<vector>
+	"Gerador.h"
+	"Carga.h"
 

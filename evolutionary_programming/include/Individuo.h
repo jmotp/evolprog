@@ -2,13 +2,15 @@
 #define INDIVIDUO_H
 #include <vector>
 #include "Gerador.h"
-#include <typeinfo>
+#include "Linha.h"
+#include "Carga.h"
+#include "Barramento.h"
 
 class Individuo
 {
     public:
         Individuo();
-        Individuo(vector<Gerador> geradores);
+        Individuo(vector<Gerador> geradores,vector<Barramento> barramentos,vector<Linha> linhas);
         virtual ~Individuo();
         //gerar valores aleatorios iniciais para as potencias produzidas dos geradores
         void fill(float P,default_random_engine & generator,uniform_real_distribution<float> distribution_){
@@ -38,11 +40,43 @@ class Individuo
             for(Gerador & g : geradores){
                 sum += g.Getcusto();
             }
-            return sum;
 
-        }
+            vector <Gerador> g1;
+            vector <Gerador> g2;
+            g1.push_back(geradores.at(0));
+            g1.push_back(geradores.at(1));
+            g2.push_back(geradores.at(2));
+            g2.push_back(geradores.at(3));
+            barramentos.at(2).Setgerador(g1);
+            barramentos.at(3).Setgerador(g2);
+            for(Barramento & b: barramentos){
+                b.Calcpinj();
+            }
+            //cout << endl;
+            for(Linha l:linhas){
+                float soma=0;
+                for(int i = 0;i< l.Getsensibilidades().size();i++){
+                    soma+= barramentos.at(i).Getpinj() * l.Getsensibilidades().at(i);
+                }
+
+                //cout << soma << " " <<l.GetPmax()<< " / ";
+                if(soma<0){
+                        soma=-soma;
+                }
+                if(soma>l.GetPmax())sum=sum+10000*(soma-l.GetPmax())*(soma-l.GetPmax());
+
+                //cout <<endl;
+
+            }
+
+
+
+
+            return sum;
+            }
 
         void corrigir(float pcons, float l ){
+
             for(Gerador & g : geradores){
                 g.corrigir(pcons,l);
                 g.calcCusto();
@@ -74,6 +108,7 @@ class Individuo
             for(Gerador g : geradores){
                 g.printPpro();
             }
+
             cout<< getCustoTotal()<<'|';
             cout<<endl;
         }
@@ -84,7 +119,9 @@ class Individuo
 
     private:
         vector<Gerador> geradores;
+        vector <Barramento> barramentos;
         float pcons;
+        vector<Linha> linhas;
 };
 
 #endif // INDIVIDUO_H
